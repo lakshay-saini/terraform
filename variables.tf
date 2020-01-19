@@ -10,6 +10,7 @@ variable "resource_group_name" {
 
 variable "location" {
   description = "The Azure Region in which to create the Virtual Network"
+  default = "eastus"
 }
 
 variable "sku" {
