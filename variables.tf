@@ -1,9 +1,11 @@
 variable "prefix" {
   description = "The prefix for the resources created in the specified Azure Resource Group."
+  default = "personal"
 }
 
 variable "resource_group_name" {
   description = "The name of the Resource Group in which the Virtual Network"
+  default = "resource"
 }
 
 variable "location" {
