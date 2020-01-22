@@ -7,7 +7,7 @@ provider "azurerm" {
   tenant_id       = "00000000-0000-0000-0000-000000000000"
 }
 
-resource "azurerm_resource_group" "example" {
+resource "azurerm_resource_group" "deploy_group" {
   name     = "${var.resource_group_name}"
   location = "${var.location}"
 }
@@ -15,13 +15,13 @@ resource "azurerm_resource_group" "example" {
 resource "random_id" "workspace" {
   keepers = {
     # Generate a new id each time we switch to a new resource group
-    group_name = "${azurerm_resource_group.example.name}"
+    group_name = "${azurerm_resource_group.deploy_group.name}"
   }
-
+  
   byte_length = 8
 }
 
-resource "azurerm_log_analytics_workspace" "example" {
+resource "azurerm_log_analytics_workspace" "deploy_log_analytics_workspace" {
   name                = "${var.prefix}-log-analytics-workspace"
   location            = "${var.location}"
   resource_group_name = "${var.resource_group_name}"
@@ -29,12 +29,12 @@ resource "azurerm_log_analytics_workspace" "example" {
   retention_in_days   = "${var.retention_in_days}"
 }
 
-resource "azurerm_log_analytics_solution" "example" {
+resource "azurerm_log_analytics_solution" "deploy_log_analytics_solution" {
   solution_name         = "ContainerInsights"
-  location              = "${azurerm_resource_group.example.location}"
-  resource_group_name   = "${azurerm_resource_group.example.name}"
-  workspace_resource_id = "${azurerm_log_analytics_workspace.example.id}"
-  workspace_name        = "${azurerm_log_analytics_workspace.example.name}"
+  location              = "${azurerm_resource_group.deploy_group.location}"
+  resource_group_name   = "${azurerm_resource_group.deploy_group.name}"
+  workspace_resource_id = "${azurerm_log_analytics_workspace.deploy_log_analytics_workspace.id}"
+  workspace_name        = "${azurerm_log_analytics_workspace.deploy_log_analytics_workspace.name}"
 
   plan {
     publisher = "Microsoft"
