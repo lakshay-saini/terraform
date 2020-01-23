@@ -5,12 +5,12 @@ variable "prefix" {
 
 variable "resource_group_name" {
   description = "The name of the Resource Group in which the Virtual Network"
-  default = "resource"
+  default = "cloud-shell-storage-centralindia"
 }
 
 variable "location" {
   description = "The Azure Region in which to create the Virtual Network"
-  default = "eastus"
+  default = "Central India"
 }
 
 variable "sku" {
